@@ -12,9 +12,9 @@ const PostContainer = ({
   comments
 }) => (
   <article>
-    <div>
+    <div className="first">
       <img className="thumbnail" src={thumbnailUrl} alt="Thumbnail" />
-      <p>{username}</p>
+      <p className="username">{username}</p>
     </div>
     <div className="post-image">
       <img src={imageUrl} alt="Post" />
@@ -36,7 +36,7 @@ const PostContainer = ({
       <p>{timestamp}</p>
     </div>
     <div className="comment-input">
-      <input type="text" />
+      <input type="text" placeholder="Add a comment.."/>
       <i className="fas fa-ellipsis-h" />
     </div>
   </article>
