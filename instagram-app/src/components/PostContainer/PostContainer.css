@@ -1,0 +1,9 @@
+article {
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  
+  /* HEADER */
+  .card-header {
+    background-color: #fff;
+  }
