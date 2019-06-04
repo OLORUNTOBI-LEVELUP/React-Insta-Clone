@@ -6,7 +6,7 @@ import discover from "./discover.png"
 import notifications from "./notifications.png"
 import profile from "./profile.png"
 
-const SearchBar = () => (
+const SearchBar = ({ handleChange }) => (
   <div className="nav">
     <Container>
       <Row>
@@ -16,8 +16,14 @@ const SearchBar = () => (
           </div>
         </Col>
         <Col className="search">
-          <i className="fa fa-search search-icon" />
-          <input value="Search" />
+          <div className="search-input">
+            <i className="fa fa-search search-icon" />
+            <input
+              type="text"
+              placeholder="Search"
+              onChange={event => handleChange(event.target.value)}
+            />
+          </div>
         </Col>
         <Col className="nav-icons">
           <img src={discover} alt="" />
