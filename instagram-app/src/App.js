@@ -8,7 +8,10 @@ import "bootstrap/dist/css/bootstrap.min.css"
 
 class App extends Component {
   state = {
-    data: dummyData
+    data: []
+  }
+  componentDidMount() {
+    this.setState({ data: dummyData})
   }
 
   render() {
