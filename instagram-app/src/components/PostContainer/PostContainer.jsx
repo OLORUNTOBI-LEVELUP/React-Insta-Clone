@@ -3,51 +3,91 @@ import "./PostContainer.css"
 import PropTypes from "prop-types"
 import CommentSection from "../CommentSection/CommentSection"
 
-const PostContainer = ({
-  username,
-  thumbnailUrl,
-  imageUrl,
-  likes,
-  timestamp,
-  comments
-}) => (
-  <article>
-    <div className="first">
-      <img className="thumbnail" src={thumbnailUrl} alt="Thumbnail" />
-      <p className="username">{username}</p>
-    </div>
-    <div className="post-image">
-      <img src={imageUrl} alt="Post" />
-    </div>
-    <div className="icons">
-      <i className="far fa-heart" />
-      <i className="far fa-comment" />
-    </div>
-    <div className="likes">
-      <p>{likes} likes</p>
-    </div>
+class PostContainer extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      commentText: "",
+      liked: false
+    }
+  }
 
-    <div className="comments-section">
-      {comments.map(comment => (
-        <CommentSection key={comment.text} comment={comment} />
-      ))}
-    </div>
-    <div className="timestamp">
-      <p>{timestamp}</p>
-    </div>
-    <div className="comment-input">
-      <input type="text" placeholder="Add a comment.."/>
-      <i className="fas fa-ellipsis-h" />
-    </div>
-  </article>
-)
+  handleChange = event => {
+    this.setState({ commentText: event.target.value })
+  }
+
+  handleLike = () => {
+    this.setState(state => {
+      let newState = { ...state }
+      newState.liked = !newState.liked
+      if (newState.liked) {
+        this.props.incrementLike(this.props.id)
+      } else {
+        this.props.decrementLike(this.props.id)
+      }
+      return newState
+    })
+  }
+
+  render() {
+    const { post, id, addNewComment } = this.props
+    return (
+      <article>
+        <div className="post-header">
+          <img className="thumbnail" src={post.thumbnailUrl} alt="Thumbnail" />
+          <p className="username">{post.username}</p>
+        </div>
+
+        <div className="post-image">
+          <img src={post.imageUrl} alt="Post" />
+        </div>
+
+        <div className="icons">
+          <i
+            className={`far fa-heart ${this.state.liked ? "red" : null}`}
+            onClick={() => this.handleLike()}
+          />
+          <i className="far fa-comment" />
+        </div>
+
+        <div className="likes">
+          <p>{post.likes} likes</p>
+        </div>
+
+        <div className="timestamp">
+          <p>{post.timestamp}</p>
+        </div>
+
+        <CommentSection  comments={post.comments} />
+
+        <form
+          className="comment-input"
+          onSubmit={e => {
+            e.preventDefault()
+            this.setState(prevState => {
+              addNewComment(prevState.commentText, id)
+              return { commentText: "" }
+            })
+          }}
+        >
+          <input
+            type="text"
+            onChange={this.handleChange}
+            value={this.state.commentText}
+          />
+          <i className="fas fa-ellipsis" />
+        </form>
+      </article>
+    )
+  }
+}
 
 PostContainer.propTypes = {
-  username: PropTypes.string.isRequired,
-  thumbnailUrl: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string.isRequired,
-  likes: PropTypes.number.isRequired,
-  timestamp: PropTypes.string.isRequired
+  username: PropTypes.string,
+  thumbnailUrl: PropTypes.string,
+  imageUrl: PropTypes.string,
+  likes: PropTypes.number,
+  timestamp: PropTypes.string
 }
 
 export default PostContainer
