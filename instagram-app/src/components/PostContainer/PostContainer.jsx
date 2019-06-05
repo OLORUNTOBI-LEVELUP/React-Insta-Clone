@@ -2,6 +2,7 @@ import React from "react"
 import "./PostContainer.css"
 import PropTypes from "prop-types"
 import CommentSection from "../CommentSection/CommentSection"
+import moment from "moment";
 
 class PostContainer extends React.Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class PostContainer extends React.Component {
 
   render() {
     const { post, id, addNewComment } = this.props
+    const time = moment(post.timestamp, "MMM Do YYYY, h:mm:ss a").fromNow()
     return (
       <article>
         <div className="post-header">
@@ -55,7 +57,7 @@ class PostContainer extends React.Component {
         </div>
 
         <div className="timestamp">
-          <p>{post.timestamp}</p>
+          <p>{time}</p>
         </div>
 
         <CommentSection  comments={post.comments} />
