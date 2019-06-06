@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import PostPage from "./components/PostContainer/PostPage";
 import Authenticate from "./authentication/withAuthenticate";
 import Login from "./components/Login/Login"
-import dummyData from "./components/dummy-data";
+
 
 
 class App extends Component {

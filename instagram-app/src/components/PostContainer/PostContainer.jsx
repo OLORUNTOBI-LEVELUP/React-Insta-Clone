@@ -1,40 +1,96 @@
-import React from "react"
-import "./PostContainer.css"
-import PropTypes from "prop-types"
-import CommentSection from "../CommentSection/CommentSection"
+import React from "react";
+
+import PropTypes from "prop-types";
+import CommentSection from "../CommentSection/CommentSection";
 import moment from "moment";
+import styled from "styled-components";
+
+const Article = styled.article`
+  max-width: 640px;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+  margin-top: 20px;
+  margin-bottom: 30px;
+
+  .thumbnail {
+    border-radius: 50%;
+    height: 50px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  input {
+    width: 600px;
+    border: none;
+    border-color: transparent;
+    z-index: 0;
+  }
+  input:hover {
+    border: none;
+    border-color: transparent;
+  }
+
+  .post-header {
+    display: flex;
+    margin-left: 10px;
+  }
+  .icons,
+  .likes,
+  .comments-section,
+  .timestamp,
+  .comment-input {
+    margin-left: 10px;
+  }
+  .username {
+    margin-top: 15px;
+  }
+
+  .far {
+    margin-right: 15px;
+  }
+
+  .fas {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 2px;
+  }
+  .comment-input {
+    padding-bottom: 20px;
+    margin-left: 10px;
+  }
+`;
 
 class PostContainer extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       commentText: "",
       liked: false
-    }
+    };
   }
 
   handleChange = event => {
-    this.setState({ commentText: event.target.value })
-  }
+    this.setState({ commentText: event.target.value });
+  };
 
   handleLike = () => {
     this.setState(state => {
-      let newState = { ...state }
-      newState.liked = !newState.liked
+      let newState = { ...state };
+      newState.liked = !newState.liked;
       if (newState.liked) {
-        this.props.incrementLike(this.props.id)
+        this.props.incrementLike(this.props.id);
       } else {
-        this.props.decrementLike(this.props.id)
+        this.props.decrementLike(this.props.id);
       }
-      return newState
-    })
-  }
+      return newState;
+    });
+  };
 
   render() {
-    const { post, id, addNewComment } = this.props
-    const time = moment(post.timestamp, "MMM Do YYYY, h:mm:ss a").fromNow()
+    const { post, id, addNewComment } = this.props;
+    const time = moment(post.timestamp, "MMM Do YYYY, h:mm:ss a").fromNow();
     return (
-      <article>
+      <Article>
         <div className="post-header">
           <img className="thumbnail" src={post.thumbnailUrl} alt="Thumbnail" />
           <p className="username">{post.username}</p>
@@ -60,16 +116,16 @@ class PostContainer extends React.Component {
           <p>{time}</p>
         </div>
 
-        <CommentSection  comments={post.comments} />
+        <CommentSection comments={post.comments} />
 
         <form
           className="comment-input"
           onSubmit={e => {
-            e.preventDefault()
+            e.preventDefault();
             this.setState(prevState => {
-              addNewComment(prevState.commentText, id)
-              return { commentText: "" }
-            })
+              addNewComment(prevState.commentText, id);
+              return { commentText: "" };
+            });
           }}
         >
           <input
@@ -79,8 +135,8 @@ class PostContainer extends React.Component {
           />
           <i className="fas fa-ellipsis" />
         </form>
-      </article>
-    )
+      </Article>
+    );
   }
 }
 
@@ -90,6 +146,6 @@ PostContainer.propTypes = {
   imageUrl: PropTypes.string,
   likes: PropTypes.number,
   timestamp: PropTypes.string
-}
+};
 
-export default PostContainer
+export default PostContainer;
