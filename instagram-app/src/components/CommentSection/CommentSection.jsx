@@ -24,8 +24,8 @@ CommentSection.propTypes = {
   })
 }
 
-CommentSection.defaultProps = {
-  username: "stranger"
-}
+// CommentSection.defaultProps = {
+//   username: "stranger"
+// }
 
 export default CommentSection

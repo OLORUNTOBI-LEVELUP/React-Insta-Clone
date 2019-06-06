@@ -2,19 +2,28 @@ import React, { Component } from "react"
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css"
 import PostPage from "./components/PostContainer/PostPage";
-import withAuthenticate from "./authentication/withAuthenticate";
+import Authenticate from "./authentication/withAuthenticate";
+import Login from "./components/Login/Login"
+import dummyData from "./components/dummy-data";
 
-const ComponentFromWithAuthenticate = withAuthenticate(PostPage);
 
 class App extends Component {
-  render(){
+  constructor() {
+    super();
+    this.state = {
+  
+    };
+  }
+
+  render() {
     return (
-      <div>
+      <div className="App">
         <ComponentFromWithAuthenticate />
       </div>
     );
   }
 }
 
+const ComponentFromWithAuthenticate = Authenticate(PostPage, Login);
 
-export default App
+export default App;
